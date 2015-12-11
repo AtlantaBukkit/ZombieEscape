@@ -14,7 +14,7 @@ import java.util.Set;
 public class ArenaConfiguration {
 
     private final ZombieEscape PLUGIN;
-    private final String NAME,
+    private final String NAME;
 
     private File configFile;
     private FileConfiguration config;
