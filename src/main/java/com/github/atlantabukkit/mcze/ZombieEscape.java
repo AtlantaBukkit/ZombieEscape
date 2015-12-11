@@ -1,6 +1,7 @@
 package com.github.atlantabukkit.mcze;
 
 import com.github.atlantabukkit.mcze.core.GameArena;
+import com.github.atlantabukkit.mcze.listeners.PlayerInteract;
 import com.github.atlantabukkit.mcze.listeners.PlayerJoin;
 import com.github.atlantabukkit.mcze.listeners.EntityDamageByEntity;
 import com.zaxxer.hikari.HikariDataSource;
@@ -34,6 +35,7 @@ public class ZombieEscape extends JavaPlugin {
         PluginManager pm = Bukkit.getServer().getPluginManager();
         pm.registerEvents(new PlayerJoin(this), this);
         pm.registerEvents(new EntityDamageByEntity(), this);
+        pm.registerEvents(new PlayerInteract(this), this);
     }
 
     private void setupHikari() {
