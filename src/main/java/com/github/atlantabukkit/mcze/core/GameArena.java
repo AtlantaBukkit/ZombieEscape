@@ -57,10 +57,14 @@ public class GameArena {
     }
 
     public void startGame() {
-
+        gameState = GameState.RUNNING;
+        PluginManager pm = Bukkit.getServer().getPluginManager();
+        pm.callEvent(new GameStartEvent());
     }
 
     public void endGame() {
-
+        gameState = GameState.WAITING;
+        PluginManager pm = Bukkit.getServer().getPluginManager();
+        pm.callEvent(new GameOverEvent());
     }
 }
