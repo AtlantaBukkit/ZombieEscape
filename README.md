@@ -1,26 +1,34 @@
-# Zombie Escape
+[![Zombie Escape Logo](http://i.imgur.com/eM7fjNP.png)](http://github.com/sgtcaze/ZombieEscape)
 
-A recreation of the Counter Strike game-mode "Zombie Escape" in Minecraft
+## About
+The game is simple... RUN! There are 2 teams: The Humans and the Zombies. The Humans' objective is to run and parkour through maps to get to the 'nukeroom'. (This is a round win for the Humans.) The Zombies' goal is to infect humans before they reach the nukeroom. Each team has unique kits and abilities that suit multiple play styles.
 
-### Features
-Coming soon!
+## Downloads
+*Zombie Escape is still in ALPHA development. Downloads are currently not available!*
 
-### Planned Reatures
-* Voting for maps
-* Map creation tool (wands?)
-* Human/Zombie kits
-* Donor features
-* Multi-Arena compatibility
-* More to come!
+## Setup
 
-### Configuration
-Coming soon!
+##### Map Guide
+You can read how to create a map [here](https://cosmosmc.net/threads/zombie-escape-map-guide.812/)
+
+##### Configuration
+*Coming soon!*
 
 ### Commands
-Coming soon!
+*Coming soon!*
 
-### Bugs
+## Developers
+
+##### Compile
+If you wish to compile Zombie Escape on your computer, you will need to follow these steps:
+* Setup a "Maven" project in your favorite IDE
+* Download our source code via git bash or the "Download Zip" button.
+* Set your Maven goal as 'clean package' and RUN
+
+## Support
+
+##### Bugs
 Got a bug? Open an issue and we'll fix it!
 
-### Pull Requests
-Coming soon!
+##### FAQ
+*Coming soon!*

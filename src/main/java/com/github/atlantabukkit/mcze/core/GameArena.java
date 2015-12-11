@@ -4,7 +4,6 @@ import com.github.atlantabukkit.mcze.ZombieEscape;
 import com.github.atlantabukkit.mcze.events.GameOverEvent;
 import com.github.atlantabukkit.mcze.events.GameStartEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameArena {
@@ -58,13 +57,11 @@ public class GameArena {
 
     public void startGame() {
         gameState = GameState.RUNNING;
-        PluginManager pm = Bukkit.getServer().getPluginManager();
-        pm.callEvent(new GameStartEvent());
+        Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent());
     }
 
     public void endGame() {
         gameState = GameState.WAITING;
-        PluginManager pm = Bukkit.getServer().getPluginManager();
-        pm.callEvent(new GameOverEvent());
+        Bukkit.getServer().getPluginManager().callEvent(new GameOverEvent());
     }
 }
