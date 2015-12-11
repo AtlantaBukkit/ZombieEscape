@@ -1,4 +1,4 @@
-package com.github.atlantabukkit.mcze.events;
+package com.github.atlantabukkit.mcze.listeners;
 
 import com.github.atlantabukkit.mcze.ZombieEscape;
 import com.github.atlantabukkit.mcze.core.GameArena;
