@@ -44,4 +44,12 @@ public class ZombieEscape extends JavaPlugin {
         hikari.addDataSourceProperty("user", config.getString("database.username"));
         hikari.addDataSourceProperty("password", config.getString("database.password"));
     }
+
+    public GameArena getGameArena() {
+        return gameArena;
+    }
+
+    public HikariDataSource getHikari() {
+        return hikari;
+    }
 }

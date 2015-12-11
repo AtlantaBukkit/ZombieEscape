@@ -1,21 +1,24 @@
 package com.github.atlantabukkit.mcze.core;
 
 import com.github.atlantabukkit.mcze.ZombieEscape;
+import com.github.atlantabukkit.mcze.events.GameOverEvent;
+import com.github.atlantabukkit.mcze.events.GameStartEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameArena {
 
-    private ZombieEscape plugin;
+    private final ZombieEscape PLUGIN;
     private GameState gameState;
-    private VoteManager voteManager;
+    private final VoteManager VOTE_MANAGER;
 
     private final int MINIMUM_PLAYERS = 2;
 
     public GameArena(ZombieEscape plugin) {
-        this.plugin = plugin;
+        this.PLUGIN = plugin;
         gameState = GameState.WAITING;
-        voteManager = new VoteManager();
+        VOTE_MANAGER = new VoteManager();
     }
 
     public boolean isMinimumMet() {
@@ -50,7 +53,7 @@ public class GameArena {
                     }
                 }
             }
-        }.runTaskTimer(plugin, 0, 20);
+        }.runTaskTimer(PLUGIN, 0, 20);
     }
 
     public void startGame() {
@@ -58,6 +61,6 @@ public class GameArena {
     }
 
     public void endGame() {
-
+        
     }
 }
