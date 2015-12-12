@@ -4,12 +4,15 @@ import com.github.atlantabukkit.mcze.ZombieEscape;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ProfileSaver extends BukkitRunnable {
 
     private Profile profile;
     private ZombieEscape plugin;
+
+    private static final String SAVE = "UPDATE data SET zombie_kills=?, human_kills=?, points=?, wins=? WHERE uuid=?";
 
     public ProfileSaver(Profile profile, ZombieEscape plugin) {
         this.profile = profile;
@@ -22,6 +25,16 @@ public class ProfileSaver extends BukkitRunnable {
 
         try {
             connection = plugin.getHikari().getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SAVE);
+            preparedStatement.setInt(1, profile.getZombieKills());
+            preparedStatement.setInt(2, profile.getHumanKills());
+            preparedStatement.setInt(3, profile.getPoints());
+            preparedStatement.setInt(4, profile.getWins());
+            preparedStatement.setString(5, profile.getUuid().toString());
+
+            preparedStatement.execute();
+            preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

@@ -27,18 +27,18 @@ public class ItemStackBuilder {
         this.META = ITEM.getItemMeta();
     }
 
-    public ItemStackBuilder amount(int amount) {
+    public ItemStackBuilder withAmount(int amount) {
         ITEM.setAmount(amount);
         return this;
     }
 
-    public ItemStackBuilder name(String name) {
+    public ItemStackBuilder withName(String name) {
         META.setDisplayName(Utils.color(name));
         ITEM.setItemMeta(META);
         return this;
     }
 
-    public ItemStackBuilder lore(String name) {
+    public ItemStackBuilder withLore(String name) {
         List<String> lore = META.getLore();
 
         if (lore == null) {
@@ -51,27 +51,27 @@ public class ItemStackBuilder {
         return this;
     }
 
-    public ItemStackBuilder durability(int durability) {
+    public ItemStackBuilder withDurability(int durability) {
         ITEM.setDurability((short) durability);
         return this;
     }
 
-    public ItemStackBuilder data(int data) {
+    public ItemStackBuilder withData(int data) {
         ITEM.setData(new MaterialData(ITEM.getType(), (byte) data));
         return this;
     }
 
-    public ItemStackBuilder enchantment(Enchantment enchantment, int level) {
+    public ItemStackBuilder withEnchantment(Enchantment enchantment, int level) {
         ITEM.addUnsafeEnchantment(enchantment, level);
         return this;
     }
 
-    public ItemStackBuilder enchantment(Enchantment enchantment) {
+    public ItemStackBuilder withEnchantment(Enchantment enchantment) {
         ITEM.addUnsafeEnchantment(enchantment, 1);
         return this;
     }
 
-    public ItemStackBuilder type(Material material) {
+    public ItemStackBuilder withType(Material material) {
         ITEM.setType(material);
         return this;
     }
@@ -88,14 +88,15 @@ public class ItemStackBuilder {
     }
 
     public ItemStackBuilder color(Color color) {
-        if (ITEM.getType() == Material.LEATHER_BOOTS || ITEM.getType() == Material.LEATHER_CHESTPLATE
-                || ITEM.getType() == Material.LEATHER_HELMET  || ITEM.getType() == Material.LEATHER_LEGGINGS) {
+        Material type = ITEM.getType();
+        if (type == Material.LEATHER_BOOTS || type == Material.LEATHER_CHESTPLATE || type == Material.LEATHER_HELMET
+                || type == Material.LEATHER_LEGGINGS) {
             LeatherArmorMeta meta = (LeatherArmorMeta) META;
             meta.setColor(color);
             ITEM.setItemMeta(meta);
             return this;
         } else {
-            throw new IllegalArgumentException("color is only applicable for leather armor!");
+            throw new IllegalArgumentException("withColor is only applicable for leather armor!");
         }
     }
 

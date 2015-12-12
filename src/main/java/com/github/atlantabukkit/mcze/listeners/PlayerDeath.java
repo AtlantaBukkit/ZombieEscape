@@ -2,6 +2,7 @@ package com.github.atlantabukkit.mcze.listeners;
 
 import com.github.atlantabukkit.mcze.ZombieEscape;
 import com.github.atlantabukkit.mcze.core.GameArena;
+import com.github.atlantabukkit.mcze.profiles.Profile;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,14 +22,23 @@ public class PlayerDeath implements Listener {
 
         GameArena gameArena = PLUGIN.getGameArena();
 
-        if(!gameArena.isGameRunning()) {
+        if (!gameArena.isGameRunning()) {
             return;
         }
 
         if (gameArena.isHuman(player)) {
             gameArena.addZombie(player);
-        } else if(gameArena.isZombie(player)) {
 
+            if (player.getKiller() != null) {
+                Profile zombieProfile = PLUGIN.getGameManager().getProfile(player.getKiller());
+                zombieProfile.setHumanKills(zombieProfile.getHumanKills() + 1);
+            }
+        } else if (gameArena.isZombie(player)) {
+
+        }
+
+        if (gameArena.isGameRunning() && gameArena.shouldEnd()) {
+            gameArena.endGame();
         }
     }
 }
