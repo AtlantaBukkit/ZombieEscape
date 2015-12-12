@@ -23,11 +23,11 @@ public class PlayerJoin implements Listener {
         if (gameArena.isGameRunning()) {
 
         } else if (gameArena.shouldStart()) {
-            gameArena.startCountdowm();
+            gameArena.startCountdown();
         }
 
         final Profile PROFILE = new Profile(event.getPlayer());
         PLUGIN.getGameManager().getProfiles().put(event.getPlayer().getUniqueId(), PROFILE);
-        new ProfileLoader(PROFILE, PLUGIN).runTaskAsynchronously(PLUGIN);
+        // new ProfileLoader(PROFILE, PLUGIN).runTaskAsynchronously(PLUGIN);
     }
 }

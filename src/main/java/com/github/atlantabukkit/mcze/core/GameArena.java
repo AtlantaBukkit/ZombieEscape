@@ -5,7 +5,9 @@ import com.github.atlantabukkit.mcze.core.constants.GameState;
 import com.github.atlantabukkit.mcze.core.constants.Messages;
 import com.github.atlantabukkit.mcze.events.GameOverEvent;
 import com.github.atlantabukkit.mcze.events.GameStartEvent;
+import com.github.atlantabukkit.mcze.utils.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -29,7 +31,7 @@ public class GameArena {
     }
 
     public int getStartingZombies() {
-        return (int) (0.25 * Bukkit.getOnlinePlayers().size()) + 1;
+        return (int) (0.25 * Bukkit.getOnlinePlayers().size() + 1);
     }
 
     public boolean isMinimumMet() {
@@ -83,7 +85,7 @@ public class GameArena {
         zombies.add(player.getUniqueId());
     }
 
-    public void startCountdowm() {
+    public void startCountdown() {
         gameState = GameState.STARTING;
 
         new BukkitRunnable() {
@@ -93,6 +95,7 @@ public class GameArena {
             public void run() {
                 if (countdown != 0) {
                     countdown--;
+                    Bukkit.broadcastMessage(ChatColor.GOLD + "Countdown: " + countdown);
                 } else {
                     cancel();
 
@@ -109,6 +112,9 @@ public class GameArena {
     public void startGame() {
         gameState = GameState.RUNNING;
         Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent());
+
+        final String YOU_ARE_ZOMBIE = Utils.color("&aYou are a zombie!");
+        final String YOU_ARE_HUMAN = Utils.color("&eYou are a human!");
 
         zombies.clear();
         humans.clear();
@@ -127,9 +133,13 @@ public class GameArena {
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (isZombie(player)) {
+                player.sendMessage(YOU_ARE_ZOMBIE);
+                PLUGIN.getMenuManager().getMenu("zkits").show(player);
                 continue;
             }
 
+            player.sendMessage(YOU_ARE_HUMAN);
+            PLUGIN.getMenuManager().getMenu("hkits").show(player);
             addHuman(player);
         }
 
@@ -139,6 +149,8 @@ public class GameArena {
     public void endGame() {
         gameState = GameState.RESTRICTED;
         Bukkit.getServer().getPluginManager().callEvent(new GameOverEvent());
+
+        Messages.GAME_ENDED.broadcast();
 
         if (getHumansSize() == 0) {
 

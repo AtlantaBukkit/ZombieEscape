@@ -6,7 +6,8 @@ import org.bukkit.entity.Player;
 
 public enum Messages {
 
-    GAME_STARTED("&3The game has started!");
+    GAME_STARTED("&a&lTHE GAME STARTED!"),
+    GAME_ENDED("&c&lTHE GAME ENDED!");
 
     private String message;
 
