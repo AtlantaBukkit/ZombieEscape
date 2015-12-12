@@ -33,7 +33,7 @@ public class ProfileSaver extends BukkitRunnable {
             preparedStatement.setInt(4, profile.getWins());
             preparedStatement.setString(5, new String(profile.getAchievements()));
             preparedStatement.setString(6, profile.getUuid().toString());
-            
+
             preparedStatement.execute();
             preparedStatement.close();
         } catch (SQLException e) {
