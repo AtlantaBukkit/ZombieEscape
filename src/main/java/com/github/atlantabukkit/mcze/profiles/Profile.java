@@ -13,8 +13,11 @@ public class Profile {
     private int humanKills;
     private int points;
     private int wins;
+    private int gamesPlayed;
 
     private boolean loaded;
+
+    private char[] achievements;
 
     public Profile(Player player) {
         this.uuid = player.getUniqueId();
@@ -69,11 +72,27 @@ public class Profile {
         this.wins = wins;
     }
 
+    public int getGamesPlayed() {
+        return gamesPlayed;
+    }
+
+    public void setGamesPlayed(int gamesPlayed) {
+        this.gamesPlayed = gamesPlayed;
+    }
+
     public boolean isLoaded() {
         return loaded;
     }
 
     public void setLoaded(boolean loaded) {
         this.loaded = loaded;
+    }
+
+    public char[] getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(char[] achievements) {
+        this.achievements = achievements;
     }
 }
