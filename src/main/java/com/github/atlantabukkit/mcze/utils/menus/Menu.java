@@ -38,4 +38,13 @@ public abstract class Menu implements InventoryHolder {
 
         return ChatColor.stripColor(itemMeta.getDisplayName());
     }
+
+    public int getSize() {
+        return size;
+    }
+
+    @Override
+    public Inventory getInventory() {
+        return inventory;
+    }
 }

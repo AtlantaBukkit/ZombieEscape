@@ -2,7 +2,10 @@ package com.github.atlantabukkit.mcze;
 
 import com.github.atlantabukkit.mcze.core.GameArena;
 import com.github.atlantabukkit.mcze.core.GameManager;
+import com.github.atlantabukkit.mcze.guis.HumanKitMenu;
+import com.github.atlantabukkit.mcze.guis.ZombieKitMenu;
 import com.github.atlantabukkit.mcze.listeners.*;
+import com.github.atlantabukkit.mcze.utils.menus.MenuManager;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,7 +16,9 @@ public class ZombieEscape extends JavaPlugin {
 
     private GameArena gameArena;
     private HikariDataSource hikari;
+
     private GameManager gameManager;
+    private MenuManager menuManager;
 
     @Override
     public void onEnable() {
@@ -21,6 +26,10 @@ public class ZombieEscape extends JavaPlugin {
 
         gameArena = new GameArena(this);
         gameManager = new GameManager();
+        menuManager = new MenuManager(this);
+
+        menuManager.addMenu("hkits", new HumanKitMenu("Human Kit Menu", 9));
+        menuManager.addMenu("zkits", new ZombieKitMenu("Zombie Kit Menu", 9));
 
         registerListeners();
     }
@@ -67,5 +76,9 @@ public class ZombieEscape extends JavaPlugin {
 
     public GameManager getGameManager() {
         return gameManager;
+    }
+
+    public MenuManager getMenuManager() {
+        return menuManager;
     }
 }
