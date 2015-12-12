@@ -22,6 +22,7 @@ public class ItemUtils {
         if (name != null) {
             meta.setDisplayName(name);
         }
+
         if (lore != null && lore.length > 0) {
             meta.setLore(Arrays.asList(lore));
         }
