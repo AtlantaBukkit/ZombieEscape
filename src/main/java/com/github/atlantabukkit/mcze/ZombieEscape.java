@@ -5,6 +5,7 @@ import com.github.atlantabukkit.mcze.core.GameManager;
 import com.github.atlantabukkit.mcze.guis.HumanKitMenu;
 import com.github.atlantabukkit.mcze.guis.ZombieKitMenu;
 import com.github.atlantabukkit.mcze.listeners.*;
+import com.github.atlantabukkit.mcze.utils.Configuration;
 import com.github.atlantabukkit.mcze.utils.menus.MenuManager;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.Bukkit;
@@ -20,6 +21,8 @@ public class ZombieEscape extends JavaPlugin {
     private GameManager gameManager;
     private MenuManager menuManager;
 
+    private Configuration configuration;
+
     @Override
     public void onEnable() {
         // setupHikari();
@@ -27,6 +30,7 @@ public class ZombieEscape extends JavaPlugin {
         gameArena = new GameArena(this);
         gameManager = new GameManager();
         menuManager = new MenuManager(this);
+        configuration = new Configuration(this);
 
         menuManager.addMenu("hkits", new HumanKitMenu("Human Kit Menu", 9));
         menuManager.addMenu("zkits", new ZombieKitMenu("Zombie Kit Menu", 9));
@@ -54,13 +58,16 @@ public class ZombieEscape extends JavaPlugin {
     }
 
     private void setupHikari() {
-        FileConfiguration config = getConfig();
+        FileConfiguration config = configuration.getSettingsConfig();
+
+        String address = config.getString("database.address");
+
         hikari = new HikariDataSource();
 
         hikari.setMaximumPoolSize(10);
         hikari.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-        hikari.addDataSourceProperty("serverName", config.getString("database.address"));
-        hikari.addDataSourceProperty("port", "3306");
+        hikari.addDataSourceProperty("serverName", address.split(":")[0]);
+        hikari.addDataSourceProperty("port", address.split(":")[1]);
         hikari.addDataSourceProperty("databaseName", config.getString("database.name"));
         hikari.addDataSourceProperty("user", config.getString("database.username"));
         hikari.addDataSourceProperty("password", config.getString("database.password"));
