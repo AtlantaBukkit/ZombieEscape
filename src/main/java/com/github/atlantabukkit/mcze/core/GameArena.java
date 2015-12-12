@@ -28,6 +28,10 @@ public class GameArena {
         VOTE_MANAGER = new VoteManager();
     }
 
+    public int getStartingZombies() {
+        return (int) (0.25 * Bukkit.getOnlinePlayers().size()) + 1;
+    }
+
     public boolean isMinimumMet() {
         return Bukkit.getOnlinePlayers().size() >= MINIMUM_PLAYERS;
     }
@@ -64,16 +68,19 @@ public class GameArena {
         return isHuman(x) && isHuman(y) || isZombie(x) && isZombie(y);
     }
 
+    public void purgePlayer(Player player) {
+        zombies.remove(player.getUniqueId());
+        humans.remove(player.getUniqueId());
+    }
+
     public void addHuman(Player player) {
+        zombies.remove(player.getUniqueId());
         humans.add(player.getUniqueId());
     }
 
     public void addZombie(Player player) {
+        humans.remove(player.getUniqueId());
         zombies.add(player.getUniqueId());
-    }
-
-    public int getStartingZombies() {
-        return (int) (0.25 * Bukkit.getOnlinePlayers().size()) + 1;
     }
 
     public void startCountdowm() {
@@ -92,7 +99,7 @@ public class GameArena {
                     if (gameState == GameState.STARTING && isMinimumMet()) {
                         startGame();
                     } else {
-
+                        gameState = GameState.WAITING;
                     }
                 }
             }

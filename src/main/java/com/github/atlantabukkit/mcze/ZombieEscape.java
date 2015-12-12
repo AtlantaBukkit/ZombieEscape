@@ -1,9 +1,8 @@
 package com.github.atlantabukkit.mcze;
 
 import com.github.atlantabukkit.mcze.core.GameArena;
-import com.github.atlantabukkit.mcze.listeners.PlayerInteract;
-import com.github.atlantabukkit.mcze.listeners.PlayerJoin;
-import com.github.atlantabukkit.mcze.listeners.EntityDamageByEntity;
+import com.github.atlantabukkit.mcze.core.GameManager;
+import com.github.atlantabukkit.mcze.listeners.*;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -14,12 +13,14 @@ public class ZombieEscape extends JavaPlugin {
 
     private GameArena gameArena;
     private HikariDataSource hikari;
+    private GameManager gameManager;
 
     @Override
     public void onEnable() {
         setupHikari();
 
         gameArena = new GameArena(this);
+        gameManager = new GameManager();
 
         registerListeners();
     }
@@ -33,9 +34,14 @@ public class ZombieEscape extends JavaPlugin {
 
     private void registerListeners() {
         PluginManager pm = Bukkit.getServer().getPluginManager();
-        pm.registerEvents(new PlayerJoin(this), this);
-        pm.registerEvents(new EntityDamageByEntity(), this);
+        pm.registerEvents(new EntityDamageByEntity(this), this);
+        pm.registerEvents(new FoodLevelChange(), this);
+        pm.registerEvents(new PlayerDeath(this), this);
+        pm.registerEvents(new PlayerDropItem(), this);
         pm.registerEvents(new PlayerInteract(this), this);
+        pm.registerEvents(new PlayerJoin(this), this);
+        pm.registerEvents(new PlayerPickupItem(), this);
+        pm.registerEvents(new PlayerQuit(this), this);
     }
 
     private void setupHikari() {
@@ -57,5 +63,9 @@ public class ZombieEscape extends JavaPlugin {
 
     public HikariDataSource getHikari() {
         return hikari;
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
     }
 }
