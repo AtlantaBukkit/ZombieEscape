@@ -4,7 +4,7 @@
 The game is simple... RUN! There are 2 teams: The Humans and the Zombies. The Humans' objective is to run and parkour through maps to get to the 'nukeroom'. (This is a round win for the Humans.) The Zombies' goal is to infect humans before they reach the nukeroom. Each team has unique kits and abilities that suit multiple play styles.
 
 == Downloads
-*Zombie Escape is still in ALPHA development. Downloads are currently not available!*
+Zombie Escape is still in ALPHA development. Downloads are currently not available!
 
 Official releases will appear in the "Releases" tab on the repository located [[https://www.github.com/sgtcaze/ZombieEscape|Click Here]]. These files are considered stable. A SHA-256 hash will be provided to assure file integrity.
 
