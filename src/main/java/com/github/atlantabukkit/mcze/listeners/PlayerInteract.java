@@ -23,8 +23,8 @@ public class PlayerInteract implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (event.getClickedBlock() instanceof Sign) {
-                final Sign sign = (Sign) event.getClickedBlock();
+            if (event.getClickedBlock().getState() instanceof Sign) {
+                final Sign sign = (Sign) event.getClickedBlock().getState();
 
                 if (sign.hasMetadata("clicked")) {
                     return;
