@@ -2,28 +2,22 @@ package com.github.atlantabukkit.mcze.core.constants;
 
 public enum Achievements {
 
-    FIRST_GAME_PLAYED(0, "First Game", "Play 1 Game"),
-    LONG_TIME_PLAYER(1, "Long Time Player", "Play 100 Games");
+    FIRST_GAME_PLAYED("First Game", "Play 1 Game"),
+    LONG_TIME_PLAYER("Long Time Player", "Play 100 Games");
 
-    private int id;
-    private String name;
-    private String description;
+    private final String NAME;
+    private final String DESCRIPTION;
 
-    Achievements(int id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
-
-    public int getId() {
-        return id;
+    Achievements(String name, String description) {
+        this.NAME = name;
+        this.DESCRIPTION = description;
     }
 
     public String getName() {
-        return name;
+        return NAME;
     }
 
     public String getDescription() {
-        return description;
+        return DESCRIPTION;
     }
 }
