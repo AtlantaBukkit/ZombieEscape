@@ -1,5 +1,6 @@
 package com.github.atlantabukkit.mcze.profiles;
 
+import com.github.atlantabukkit.mcze.core.constants.KitType;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -18,6 +19,9 @@ public class Profile {
     private boolean loaded;
 
     private char[] achievements;
+
+    private KitType humanKit;
+    private KitType zombieKit;
 
     public Profile(Player player) {
         this.uuid = player.getUniqueId();
@@ -94,5 +98,21 @@ public class Profile {
 
     public void setAchievements(char[] achievements) {
         this.achievements = achievements;
+    }
+
+    public KitType getHumanKit() {
+        return humanKit;
+    }
+
+    public void setHumanKit(KitType humanKit) {
+        this.humanKit = humanKit;
+    }
+
+    public KitType getZombieKit() {
+        return zombieKit;
+    }
+
+    public void setZombieKit(KitType zombieKit) {
+        this.zombieKit = zombieKit;
     }
 }

@@ -2,6 +2,7 @@ package com.github.atlantabukkit.mcze.profiles;
 
 import com.github.atlantabukkit.mcze.ZombieEscape;
 import com.github.atlantabukkit.mcze.core.constants.Achievements;
+import com.github.atlantabukkit.mcze.core.constants.KitType;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -15,8 +16,8 @@ public class ProfileLoader extends BukkitRunnable {
     private Profile profile;
     private ZombieEscape plugin;
 
-    private static final String INSERT = "INSERT INTO data VALUES(?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name=?";
-    private static final String SELECT = "SELECT zombie_kills,human_kills,points,wins,achievements FROM data WHERE uuid=?";
+    private static final String INSERT = "INSERT INTO data VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name=?";
+    private static final String SELECT = "SELECT zombie_kills,human_kills,points,wins,achievements,human_kit,zombie_kit FROM data WHERE uuid=?";
 
     public ProfileLoader(Profile profile, ZombieEscape plugin) {
         this.profile = profile;
@@ -38,7 +39,9 @@ public class ProfileLoader extends BukkitRunnable {
             preparedStatement.setInt(5, 0);
             preparedStatement.setInt(6, 0);
             preparedStatement.setString(7, StringUtils.repeat("f", Achievements.values().length));
-            preparedStatement.setString(8, profile.getName());
+            preparedStatement.setString(8, "TANK");
+            preparedStatement.setString(9, "LEAPER");
+            preparedStatement.setString(10, profile.getName());
 
             preparedStatement.execute();
 
@@ -53,6 +56,8 @@ public class ProfileLoader extends BukkitRunnable {
                 profile.setPoints(resultSet.getInt("points"));
                 profile.setWins(resultSet.getInt("wins"));
                 profile.setAchievements(getAchievements(resultSet));
+                profile.setHumanKit(KitType.valueOf(resultSet.getString("human_kit")));
+                profile.setZombieKit(KitType.valueOf(resultSet.getString("zombie_kit")));
                 profile.setLoaded(true);
             }
 
@@ -72,25 +77,14 @@ public class ProfileLoader extends BukkitRunnable {
     }
 
     private char[] getAchievements(ResultSet result) throws SQLException {
-        char[] achievements = new char[Achievements.values().length];
-        char[] achievementStatuses = result.getString("achievements").toCharArray();
+        char[] achieved = result.getString("achievements").toCharArray();
 
-        for (Achievements achievement : Achievements.values()) {
-            if (isSet(achievementStatuses, achievement.getId())) {
-                achievements[achievement.getId()] = achievementStatuses[achievement.getId()];
-            } else {
-                achievements[achievement.getId()] = 'f';
-            }
+        if (achieved.length == Achievements.values().length) {
+            return achieved;
         }
 
-        return achievements;
-    }
-
-    private boolean isSet(Object[] array, int index) {
-        try {
-            return (array[index] != null);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return false;
-        }
+        char[] adjusted = StringUtils.repeat("f", Achievements.values().length).toCharArray();
+        System.arraycopy(achieved, 0, adjusted, 0, adjusted.length);
+        return adjusted;
     }
 }

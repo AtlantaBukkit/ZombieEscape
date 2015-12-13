@@ -2,10 +2,13 @@ package com.github.atlantabukkit.mcze.core;
 
 import com.github.atlantabukkit.mcze.ZombieEscape;
 import com.github.atlantabukkit.mcze.core.constants.GameState;
+import com.github.atlantabukkit.mcze.core.constants.KitType;
 import com.github.atlantabukkit.mcze.core.constants.Messages;
 import com.github.atlantabukkit.mcze.events.GameOverEvent;
 import com.github.atlantabukkit.mcze.events.GameStartEvent;
+import com.github.atlantabukkit.mcze.profiles.Profile;
 import com.github.atlantabukkit.mcze.utils.Utils;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -83,6 +86,12 @@ public class GameArena {
     public void addZombie(Player player) {
         humans.remove(player.getUniqueId());
         zombies.add(player.getUniqueId());
+    }
+
+    public void giveKit(Player player) {
+        Profile profile = PLUGIN.getGameManager().getProfile(player);
+        KitType kitType = isHuman(player) ? profile.getHumanKit() : profile.getZombieKit();
+        kitType.getKitAction().giveKit(player);
     }
 
     public void startCountdown() {
